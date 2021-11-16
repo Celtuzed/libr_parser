@@ -3,11 +3,7 @@ import os
 import requests
 from bs4 import BeautifulSoup
 
-from utils import download_txt
-
-def check_for_redirect(response):
-    if response.history:
-        raise MyException('An HTTP error occurred.')
+from utils import download_txt, check_for_redirect
 
 
 def parse_html(book_id):
