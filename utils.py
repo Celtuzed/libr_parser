@@ -2,6 +2,7 @@ import os
 
 import requests
 from pathvalidate import sanitize_filename
+from urllib.parse import urlsplit
 
 
 def check_for_redirect(response):
@@ -9,9 +10,21 @@ def check_for_redirect(response):
         raise MyException('An HTTP error occurred.')
 
 
-def download_txt(url, filename, folder, book_id):
+def download_txt(url, filename, books_folder, book_id):
+    upgraded_filename = f"{book_id} {sanitize_filename(filename)}"
     response = requests.get(url)
     response.raise_for_status()
-    path = os.path.join(folder, sanitize_filename(filename))
+    path = os.path.join(books_folder, upgraded_filename)
     with open(f'{path}.txt', 'wb') as file:
+        file.write(response.content)
+
+
+def download_image(image_link, filename, images_folder, book_id):
+    upgraded_filename = f"{book_id} {sanitize_filename(filename)}"
+    splited_link = urlsplit(image_link)
+    filename = splited_link.path.split('/')[2]
+    response = requests.get(image_link)
+    response.raise_for_status()
+    path = os.path.join(images_folder, filename)
+    with open(path, 'wb') as file:
         file.write(response.content)
