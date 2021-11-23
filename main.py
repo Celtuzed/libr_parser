@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from utils import download_txt, download_image, check_for_redirect
-from main_parser_logic import parse_html, get_comments
+from main_parser_logic import parse_html, get_comments, get_genres
 
 if __name__ == '__main__':
 
