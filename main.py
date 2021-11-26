@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from utils import download_txt, download_image, check_for_redirect
-from main_parser_logic import parse_html, get_comments, get_genres
+from main_parser_logic import parse_book_page
 
 if __name__ == '__main__':
 
@@ -21,8 +21,9 @@ if __name__ == '__main__':
             response = requests.get(url)
             response.raise_for_status()
             check_for_redirect(response)
-            filename, author_name, image_link = parse_html(book_id)
-            download_txt(url, filename, books_folder, book_id)
-            download_image(image_link, filename, images_folder, book_id)
+            book_information, image_link = parse_book_page(book_id)
+            print(book_information)
+            #download_txt(url, filename, books_folder, book_id)
+            #download_image(image_link, filename, images_folder, book_id)
         except:
             print()
