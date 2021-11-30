@@ -41,8 +41,8 @@ if __name__ == '__main__':
 
             filename = book_information['book_name']
             author_name = book_information['author_name']
-            print(book_information)
-            #download_txt(url, filename, books_folder, book_id)
-            #download_image(image_link, filename, images_folder, book_id)
+            
+            download_txt(url, filename, books_folder, book_id)
+            download_image(image_link, filename, images_folder, book_id)
         except:
             print()
