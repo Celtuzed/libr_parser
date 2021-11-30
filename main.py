@@ -2,14 +2,16 @@ import os
 import argparse
 
 import requests
-from bs4 import BeautifulSoup
 
 from utils import download_txt, download_image, check_for_redirect
 from main_parser_logic import parse_book_page
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(description='Прога парсит инфу о книге по её id и скачивает её же')
+    parser = argparse.ArgumentParser(
+            description='Этот код нужен для парсинга онлайн библиотеки,\
+                         а также скачиванию книг и картинок.'
+    )
     parser.add_argument(
             '-si', '--start_id',
             default=1,
@@ -41,7 +43,7 @@ if __name__ == '__main__':
 
             filename = book_information['book_name']
             author_name = book_information['author_name']
-            
+
             download_txt(url, filename, books_folder, book_id)
             download_image(image_link, filename, images_folder, book_id)
         except:
