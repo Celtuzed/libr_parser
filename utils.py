@@ -20,7 +20,6 @@ def download_txt(url, filename, books_folder, book_id):
 
 
 def download_image(image_link, filename, images_folder, book_id):
-    upgraded_filename = f"{book_id} {sanitize_filename(filename)}"
     splited_link = urlsplit(image_link)
     filename = unquote(splited_link.path.split('/')[2])
     response = requests.get(image_link)
