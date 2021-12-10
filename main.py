@@ -3,8 +3,9 @@ import argparse
 
 import requests
 
-from utils import download_txt, download_image, check_for_redirect
+from download_files import download_txt, download_image
 from main_parser_logic import parse_book_page
+
 
 if __name__ == '__main__':
 
@@ -33,18 +34,18 @@ if __name__ == '__main__':
 
     for book_id in range(args.start_id, args.end_id):
 
-        url = f"https://tululu.org/txt.php?id={book_id}"
+        headers = {
+            "id": book_id
+        }
+        url = "https://tululu.org/txt.php"
 
         try:
-            response = requests.get(url)
-            response.raise_for_status()
-            check_for_redirect(response)
-            book_information, image_link = parse_book_page(book_id)
+            book_information = parse_book_page(book_id)
 
             filename = book_information['book_name']
             author_name = book_information['author_name']
 
-            download_txt(url, filename, books_folder, book_id)
-            download_image(image_link, filename, images_folder, book_id)
-        except:
-            print()
+            download_txt(url, headers, filename, books_folder, book_id)
+            download_image(book_information, filename, images_folder)
+        except requests.exceptions.HTTPError:
+            print(f"Не удалось скачать книгу с id = {book_id}")
