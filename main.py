@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
     for book_id in range(args.start_id, args.end_id):
 
-        headers = {
+        params = {
             "id": book_id
         }
         url = "https://tululu.org/txt.php"
