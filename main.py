@@ -41,9 +41,7 @@ if __name__ == '__main__':
 
         try:
             book_information = parse_book_page(book_id)
-
             filename = book_information['book_name']
-            author_name = book_information['author_name']
 
             download_txt(url, headers, filename, books_folder, book_id)
             download_image(book_information, filename, images_folder)
