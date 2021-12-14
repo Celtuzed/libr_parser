@@ -16,8 +16,8 @@ def download_txt(url, headers, filename, books_folder, book_id):
     response.raise_for_status()
     check_for_redirect(response)
     path = os.path.join(books_folder, upgraded_filename)
-    with open(f'{path}.txt', 'wb') as file:
-        file.write(response.content)
+    with open(f'{path}.txt', 'wt') as file:
+        file.write(response.text)
 
 
 def download_image(book_information, filename, images_folder):
