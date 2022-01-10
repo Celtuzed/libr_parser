@@ -12,7 +12,7 @@ def check_for_redirect(response):
 
 def download_txt(url, params, filename, books_folder, book_id):
     upgraded_filename = f"{book_id} {sanitize_filename(filename)}"
-    response = requests.get(url, headers)
+    response = requests.get(url, params)
     response.raise_for_status()
     check_for_redirect(response)
     path = os.path.join(books_folder, upgraded_filename)

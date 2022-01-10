@@ -43,7 +43,7 @@ if __name__ == '__main__':
             book_information = parse_book_page(book_id)
             filename = book_information['book_name']
 
-            download_txt(url, headers, filename, books_folder, book_id)
+            download_txt(url, params, filename, books_folder, book_id)
             download_image(book_information, filename, images_folder)
         except requests.exceptions.HTTPError:
             print(f"Не удалось скачать книгу с id = {book_id}")
