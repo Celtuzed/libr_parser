@@ -14,10 +14,10 @@ def download_txt(url, params, filename, books_folder, book_id):
     upgraded_filename = f"{book_id} {sanitize_filename(filename)}"
     response = requests.get(url, params)
     response.raise_for_status()
-    check_for_redirect(response)
-    path = os.path.join(books_folder, upgraded_filename)
-    with open(f'{path}.txt', 'wt') as file:
+    path = os.path.join(books_folder, upgraded_filename); print(path)
+    with open(f'{path}.txt', 'wt', encoding='utf-8') as file:
         file.write(response.text)
+    return(path)
 
 
 def download_image(book_information, filename, images_folder):
@@ -29,3 +29,4 @@ def download_image(book_information, filename, images_folder):
     path = os.path.join(images_folder, filename)
     with open(path, 'wb') as file:
         file.write(response.content)
+    return(path)
