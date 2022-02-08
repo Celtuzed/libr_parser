@@ -16,7 +16,7 @@ def get_books_urls():
     url = "http://tululu.org/"
     books_urls = []
 
-    for page in range(5):
+    for page in range(1, 2):
 
         category_url = f"http://tululu.org/l55/{page}"
 
@@ -24,8 +24,10 @@ def get_books_urls():
         response.raise_for_status()
 
         soup = BeautifulSoup(response.text, 'lxml')
-        books_soup = soup.find_all('table', class_='d_book')
-        books = [book.find('a')['href'] for book in books_soup]
+        books_selector = "table.d_book"
+        book_selector = "a"
+        books_soup = soup.select(books_selector)
+        books = [book.select_one(book_selector)['href'] for book in books_soup]
         for book in books:
             books_urls.append(urljoin(url, book))
 

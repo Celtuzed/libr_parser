@@ -12,17 +12,20 @@ def parse_book_page(book_id):
     check_for_redirect(response)
 
     soup = BeautifulSoup(response.text, 'lxml')
-    title_tag = soup.find('h1')
-    title_text = title_tag.text
+    title_selector = "h1"
+    title_text = soup.select(title_selector)[0].text
     book_name, author_name = title_text.split('::')
 
-    soup_comments = soup.find_all('div', class_='texts')
-    comments = [comment.find('span').text for comment in soup_comments]
+    comments_selector = "div.texts span"
+    soup_comments = soup.select(comments_selector)
+    comments = [comment.text for comment in soup_comments]
 
-    soup_genres = soup.find_all('span', class_='d_book')
-    genres = [genre.find('a').text for genre in soup_genres]
+    genres_selector = "span.d_book a"
+    soup_genres = soup.select(genres_selector)
+    genres = [genre.text for genre in soup_genres]
 
-    title_image = soup.find(class_='bookimage').find('img')['src']
+    image_selector = ".bookimage img"
+    title_image = soup.select(image_selector)[0]['src']
     image_link = urljoin(url, title_image)
 
     book_information = {
