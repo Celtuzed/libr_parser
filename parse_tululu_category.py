@@ -46,13 +46,13 @@ if __name__ == '__main__':
     parser.add_argument(
             '-sp', '--start_page',
             default=1,
-            help='С какой книги начинать парсить',
+            help='С какой страницы начинать парсить',
             type=int
                         )
     parser.add_argument(
             '-ep', '--end_page',
             default=2,
-            help='До какой книги будет парсить(включительно)',
+            help='До какой страницы будет парсить(включительно)',
             type=int
                         )
 
