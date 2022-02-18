@@ -14,8 +14,8 @@ def download_txt(url, params, filename, books_folder, book_id):
     upgraded_filename = f"{book_id} {sanitize_filename(filename)}"
     response = requests.get(url, params)
     response.raise_for_status()
-    path = os.path.join(books_folder, upgraded_filename); print(path)
-    with open(f'{path}.txt', 'wt', encoding='utf-8') as file:
+    path = f"{os.path.join(books_folder, upgraded_filename)}.txt"
+    with open(path, 'wt', encoding='utf-8') as file:
         file.write(response.text)
     return(path)
 
