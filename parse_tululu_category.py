@@ -1,8 +1,11 @@
-import requests
+import argparse
 import json
 import os
 
 from pprint import pprint
+
+import requests
+
 from bs4 import BeautifulSoup
 from pathvalidate import sanitize_filename
 from urllib.parse import urljoin, urlparse
@@ -11,12 +14,12 @@ from download_files import download_txt, download_image
 from main_parser_logic import parse_book_page
 
 
-def get_books_urls():
+def get_books_urls(args):
 
     url = "http://tululu.org/"
     books_urls = []
 
-    for page in range(1, 2):
+    for page in range(args.start_page, args.end_page):
 
         category_url = f"http://tululu.org/l55/{page}"
 
@@ -35,12 +38,58 @@ def get_books_urls():
 
 if __name__ == '__main__':
 
-    books_folder = "books"
-    os.makedirs(books_folder, exist_ok=True)
-    images_folder = "images"
-    os.makedirs(images_folder, exist_ok=True)
+    parser = argparse.ArgumentParser(
+            description='Этот код нужен для парсинга онлайн библиотеки,\
+                         а также скачиванию книг и картинок.'
+    )
 
-    books_urls = get_books_urls()
+    parser.add_argument(
+            '-sp', '--start_page',
+            default=1,
+            help='С какой книги начинать парсить',
+            type=int
+                        )
+    parser.add_argument(
+            '-ep', '--end_page',
+            default=2,
+            help='До какой книги будет парсить(включительно)',
+            type=int
+                        )
+
+    parser.add_argument(
+            '-jp', '--json_path',
+            default='results',
+            help='Указать свой путь к *.json файлу с результатами.'
+    )
+    parser.add_argument(
+            '-df', '--dest_folder',
+            default='results',
+            help='Путь у каталогу с результатами парсинга: картинками, книгами и JSON.'
+                        )
+
+    parser.add_argument(
+            '-si', '--skip_imgs',
+            action='store_true',
+            help='Не скачивать картинки.'
+                        )
+    parser.add_argument(
+            '-st', '--skip_txt',
+            action='store_true',
+            help='Не скачивать книги.'
+                        )
+    args = parser.parse_args()
+
+    dest_folder = args.dest_folder
+    books_folder = os.path.join(dest_folder, "books")
+    images_folder = os.path.join(dest_folder, "images")
+    json_folder = args.json_path
+
+    os.makedirs(dest_folder, exist_ok=True)
+    os.makedirs(books_folder, exist_ok=True)
+    os.makedirs(images_folder, exist_ok=True)
+    os.makedirs(json_folder, exist_ok=True)
+
+    books_urls = get_books_urls(args)
     books_information = []
 
     for book_url in books_urls:
@@ -55,19 +104,27 @@ if __name__ == '__main__':
         try:
 
             book_information = parse_book_page(book_id)
-            img_path = download_image(book_information, book_information['book_name'], images_folder)
-            book_path = download_txt(url, params, book_information['book_name'], books_folder, book_id)
+
+            if not args.skip_txt:
+                book_path = download_txt(url, params, book_information['book_name'], books_folder, book_id)
+            else:
+                book_path = None
+
+            if not args.skip_imgs:
+                img_path = download_image(book_information, book_information['book_name'], images_folder)
+            else:
+                img_path = None
 
             books_information.append({
                 "title": book_information['book_name'],
                 "author": book_information['author_name'],
-                "img_scr": img_path.replace('\\', '/'),
-                "book_path": f"{book_path}.txt".replace('\\', '/'),
+                "img_scr": img_path,
+                "book_path": book_path,
                 "comments": book_information['comments']
             })
 
         except requests.exceptions.HTTPError:
             print(f"Не удалось скачать книгу с id = {book_id}")
 
-    with open("books_information.json", "a", encoding='utf8') as file:
+    with open(os.path.join(args.json_path, "books_information.json"), "a", encoding='utf8') as file:
         json.dump(books_information, file, ensure_ascii=False)
