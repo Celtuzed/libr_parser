@@ -141,5 +141,5 @@ if __name__ == '__main__':
         except requests.exceptions.HTTPError:
             print(f"Не удалось скачать книгу с id = {book_id}")
 
-    with open(os.path.join(args.json_path, "books_information.json"), "a", encoding='utf8') as file:
+    with open(os.path.join(args.json_path, "books_information.json"), "w", encoding='utf8') as file:
         json.dump(books_information, file, ensure_ascii=False)
