@@ -12,6 +12,20 @@ from download_files import download_txt, download_image
 from main_parser_logic import parse_book_page
 
 
+def get_last_page():
+
+    url = "http://tululu.org/l55/"
+    response = requests.get(url)
+    response.raise_for_status()
+
+    soup = BeautifulSoup(response.text, 'lxml')
+    pages_selector = "a.npage"
+    pages_soup = soup.select(pages_selector)
+    end_page = pages_soup[-1].text
+
+    return end_page
+
+
 def get_books_urls(args):
 
     url = "http://tululu.org/"
@@ -50,7 +64,7 @@ if __name__ == '__main__':
                         )
     parser.add_argument(
             '-ep', '--end_page',
-            default=2,
+            default=get_last_page(),
             help='До какой страницы будет парсить(включительно)',
             type=int
                         )
@@ -105,12 +119,14 @@ if __name__ == '__main__':
             book_information = parse_book_page(book_id)
 
             if not args.skip_txt:
-                book_path = download_txt(url, params, book_information['book_name'], books_folder, book_id)
+                book_path = download_txt(
+                    url, params, book_information['book_name'], books_folder, book_id)
             else:
                 book_path = None
 
             if not args.skip_imgs:
-                img_path = download_image(book_information, book_information['book_name'], images_folder)
+                img_path = download_image(
+                    book_information, book_information['book_name'], images_folder)
             else:
                 img_path = None
 
