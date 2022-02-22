@@ -46,7 +46,7 @@ def get_books_urls(args):
         for book in books:
             books_urls.append(urljoin(url, book))
 
-    return(books_urls)
+    return books_urls
 
 
 if __name__ == '__main__':

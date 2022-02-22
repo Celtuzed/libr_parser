@@ -17,7 +17,7 @@ def download_txt(url, params, filename, books_folder, book_id):
     path = f"{os.path.join(books_folder, upgraded_filename)}.txt"
     with open(path, 'wt', encoding='utf-8') as file:
         file.write(response.text)
-    return(path)
+    return path
 
 
 def download_image(book_information, filename, images_folder):
@@ -29,4 +29,4 @@ def download_image(book_information, filename, images_folder):
     path = os.path.join(images_folder, filename)
     with open(path, 'wb') as file:
         file.write(response.content)
-    return(path)
+    return path

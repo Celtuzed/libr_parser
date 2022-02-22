@@ -5,6 +5,7 @@ from urllib.parse import urljoin
 
 from download_files import check_for_redirect
 
+
 def parse_book_page(book_id):
     url = f"https://tululu.org/b{book_id}/"
     response = requests.get(url)
