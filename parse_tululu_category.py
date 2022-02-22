@@ -2,8 +2,6 @@ import argparse
 import json
 import os
 
-from pprint import pprint
-
 import requests
 
 from bs4 import BeautifulSoup
@@ -35,6 +33,7 @@ def get_books_urls(args):
             books_urls.append(urljoin(url, book))
 
     return(books_urls)
+
 
 if __name__ == '__main__':
 
