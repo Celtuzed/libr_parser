@@ -133,8 +133,8 @@ if __name__ == '__main__':
             books_information.append({
                 "title": book_information['book_name'],
                 "author": book_information['author_name'],
-                "img_scr": img_path,
-                "book_path": book_path,
+                "img_scr": img_path.replace("\\", "/"),
+                "book_path": book_path.replace("\\", "/"),
                 "comments": book_information['comments']
             })
 
