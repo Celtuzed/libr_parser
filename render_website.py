@@ -18,12 +18,15 @@ def on_reload():
 
     books_information = json.loads(json_books_information)
     chunked_books_information = list(chunked(books_information, 2))
-    all_pages = chunked(chunked_books_information, 10)
-    print(all_pages)
+    all_pages = list(chunked(chunked_books_information, 5))
+    pages_numbers = len(all_pages)
+
     for page_number, books_for_page in enumerate(all_pages, 1):
 
         rendered_page = template.render(
-            books=books_for_page
+            books=books_for_page,
+            this_page=page_number,
+            pages_numbers=pages_numbers
         )
         with open(f"pages/index{page_number}.html", "w", encoding='utf8') as file:
             file.write(rendered_page)

@@ -11,43 +11,77 @@
     <title>Hello, world!</title>
   </head>
   <body>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <div class="container">
+          <div class="row">
+
+            {% if this_page == 1 %}
+              <li class="page-item"><a class="page-link" href="{{"index" + this_page|string + ".html"}}">Назад</a></li>
+            {% else %}
+              <li class="page-item"><a class="page-link" href="{{"index" + (this_page - 1)|string + ".html"}}">Назад</a></li>
+            {% endif %}
+
+            {% for page in range(1, pages_numbers + 1) %}
+              {% if page == this_page %}
+                <li class="page-item active" aria-current="page">
+                  <span class="page-link">
+                    {{this_page}}
+                    <span class="sr-only">(current)</span>
+                  </span>
+                </li>
+              {% else %}
+                <li class="page-item"><a class="page-link" href="{{"index" + page|string + ".html"}}">{{page}}</a></li>
+              {% endif %}
+            {% endfor %}
+
+            {% if this_page == pages_numbers %}
+              <li class="page-item"><a class="page-link" href="{{"index" + this_page|string + ".html"}}">Вперёд</a></li>
+            {% else %}
+              <li class="page-item"><a class="page-link" href="{{"index" + (this_page + 1)|string + ".html"}}">Вперёд</a></li>
+            {% endif %}
+
+          </div>
+        </div>
+      </ul>
+    </nav>
     {% for book in books %}
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <div class="card mb-3" style="max-width: 540px;">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <img src="../{{book[0].img_scr|urlencode}}" class="card-img" alt="Book">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">{{book[0].title}}</h5>
-                  <p class="card-text">{{book[0].author}}</p>
-                  <a href="../{{book[0].book_path|urlencode}}" target="_blank">Читать</a>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row no-gutters">
+                <div class="col-md-4">
+                  <img src="../{{book[0].img_scr|urlencode}}" class="card-img" alt="Book">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">{{book[0].title}}</h5>
+                    <p class="card-text">{{book[0].author}}</p>
+                    <a href="../{{book[0].book_path|urlencode}}" target="_blank">Читать</a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col">
-          <div class="card mb-3" style="max-width: 540px;">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <img src="../{{book[1].img_scr|urlencode}}" class="card-img" alt="Book">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">{{book[1].title}}</h5>
-                  <p class="card-text">{{book[1].author}}</p>
-                  <a href="../{{book[1].book_path|urlencode}}" target="_blank">Читать</a>
+          <div class="col">
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row no-gutters">
+                <div class="col-md-4">
+                  <img src="../{{book[1].img_scr|urlencode}}" class="card-img" alt="Book">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">{{book[1].title}}</h5>
+                    <p class="card-text">{{book[1].author}}</p>
+                    <a href="../{{book[1].book_path|urlencode}}" target="_blank">Читать</a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     {% endfor %}
 
     <!-- Optional JavaScript -->
