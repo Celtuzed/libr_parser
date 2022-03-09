@@ -18,7 +18,7 @@ def on_reload():
 
     books_information = json.loads(json_books_information)
     chunked_books_information = list(chunked(books_information, 2))
-    all_pages = list(chunked(chunked_books_information, 5))
+    all_pages = list(chunked(chunked_books_information, 10))
     pages_numbers = len(all_pages)
 
     for page_number, books_for_page in enumerate(all_pages, 1):
