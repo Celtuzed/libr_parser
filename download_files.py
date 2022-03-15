@@ -14,6 +14,7 @@ def download_txt(url, params, filename, books_folder, book_id):
     upgraded_filename = f"{book_id} {sanitize_filename(filename)}"
     response = requests.get(url, params)
     response.raise_for_status()
+    check_for_redirect(response)
     path = f"{os.path.join(books_folder, upgraded_filename)}.txt"
     with open(path, 'wt', encoding='utf-8') as file:
         file.write(response.text)
@@ -25,7 +26,6 @@ def download_image(book_information, filename, images_folder):
     filename = unquote(splited_link.path.split('/')[2])
     response = requests.get(book_information['image_link'])
     response.raise_for_status()
-    check_for_redirect(response)
     path = os.path.join(images_folder, filename)
     with open(path, 'wb') as file:
         file.write(response.content)
