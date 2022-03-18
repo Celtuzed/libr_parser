@@ -13,9 +13,7 @@
   </head>
   <body>
     <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <div class="container">
-          <div class="row">
+      <ul class="pagination justify-content-center">
 
             {% if this_page == 1 %}
               <li class="page-item"><a class="page-link" href="{{"index" + this_page|string + ".html"}}">Назад</a></li>
@@ -42,8 +40,6 @@
               <li class="page-item"><a class="page-link" href="{{"index" + (this_page + 1)|string + ".html"}}">Вперёд</a></li>
             {% endif %}
 
-          </div>
-        </div>
       </ul>
     </nav>
     {% for book in books %}
