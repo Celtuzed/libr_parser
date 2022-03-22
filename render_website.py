@@ -23,14 +23,14 @@ def on_reload():
 
     chunked_books_information = list(chunked(books_information, COLUMNS_ON_PAGE))
     all_pages = list(chunked(chunked_books_information, LINES_ON_PAGE))
-    pages_numbers = len(all_pages)
+    pages_number = len(all_pages)
 
     for page_number, books_for_page in enumerate(all_pages, 1):
 
         rendered_page = template.render(
             books=books_for_page,
             this_page=page_number,
-            pages_numbers=pages_numbers
+            pages_number=pages_number
         )
         with open(f"pages/index{page_number}.html", "w", encoding='utf8') as file:
             file.write(rendered_page)
