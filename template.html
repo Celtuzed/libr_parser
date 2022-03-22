@@ -12,36 +12,40 @@
     <title>Hello, world!</title>
   </head>
   <body>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center">
+    <hr>
+      <div class="pb-1">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
 
-            {% if this_page == 1 %}
-              <li class="page-item"><a class="page-link" href="{{"index" + this_page|string + ".html"}}">Назад</a></li>
-            {% else %}
-              <li class="page-item"><a class="page-link" href="{{"index" + (this_page - 1)|string + ".html"}}">Назад</a></li>
-            {% endif %}
+                {% if this_page == 1 %}
+                  <li class="page-item"><a class="page-link" href="{{"index" + this_page|string + ".html"}}">Назад</a></li>
+                {% else %}
+                  <li class="page-item"><a class="page-link" href="{{"index" + (this_page - 1)|string + ".html"}}">Назад</a></li>
+                {% endif %}
 
-            {% for page in range(1, pages_numbers + 1) %}
-              {% if page == this_page %}
-                <li class="page-item active" aria-current="page">
-                  <span class="page-link">
-                    {{this_page}}
-                    <span class="sr-only">(current)</span>
-                  </span>
-                </li>
-              {% else %}
-                <li class="page-item"><a class="page-link" href="{{"index" + page|string + ".html"}}">{{page}}</a></li>
-              {% endif %}
-            {% endfor %}
+                {% for page in range(1, pages_numbers + 1) %}
+                  {% if page == this_page %}
+                    <li class="page-item active" aria-current="page">
+                      <span class="page-link">
+                        {{this_page}}
+                        <span class="sr-only">(current)</span>
+                      </span>
+                    </li>
+                  {% else %}
+                    <li class="page-item"><a class="page-link" href="{{"index" + page|string + ".html"}}">{{page}}</a></li>
+                  {% endif %}
+                {% endfor %}
 
-            {% if this_page == pages_numbers %}
-              <li class="page-item"><a class="page-link" href="{{"index" + this_page|string + ".html"}}">Вперёд</a></li>
-            {% else %}
-              <li class="page-item"><a class="page-link" href="{{"index" + (this_page + 1)|string + ".html"}}">Вперёд</a></li>
-            {% endif %}
+                {% if this_page == pages_numbers %}
+                  <li class="page-item"><a class="page-link" href="{{"index" + this_page|string + ".html"}}">Вперёд</a></li>
+                {% else %}
+                  <li class="page-item"><a class="page-link" href="{{"index" + (this_page + 1)|string + ".html"}}">Вперёд</a></li>
+                {% endif %}
 
-      </ul>
-    </nav>
+          </ul>
+        </nav>
+      </div>
+    </hr>
     {% for book in books %}
       <div class="container">
         <div class="row">
