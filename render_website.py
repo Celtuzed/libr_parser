@@ -6,6 +6,10 @@ from livereload import Server
 from more_itertools import chunked
 
 
+COLUMNS_ON_PAGE = 2
+LINES_ON_PAGE = 10
+
+
 def on_reload():
 
     env = Environment(
@@ -17,8 +21,8 @@ def on_reload():
     with open("results/books_information.json", "r", encoding='utf8') as information:
         books_information = json.load(information)
 
-    chunked_books_information = list(chunked(books_information, 2))
-    all_pages = list(chunked(chunked_books_information, 10))
+    chunked_books_information = list(chunked(books_information, COLUMNS_ON_PAGE))
+    all_pages = list(chunked(chunked_books_information, LINES_ON_PAGE))
     pages_numbers = len(all_pages)
 
     for page_number, books_for_page in enumerate(all_pages, 1):
