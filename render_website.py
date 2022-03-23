@@ -19,10 +19,10 @@ def on_reload():
     template = env.get_template('template.html')
 
     with open("results/books_information.json", "r", encoding='utf8') as information:
-        books_information = json.load(information)
+        all_books_information = json.load(information)
 
-    chunked_books_information = list(chunked(books_information, COLUMNS_ON_PAGE))
-    all_pages = list(chunked(chunked_books_information, LINES_ON_PAGE))
+    books_information_for_line = list(chunked(all_books_information, COLUMNS_ON_PAGE))
+    all_pages = list(chunked(books_information_for_line, LINES_ON_PAGE))
     pages_number = len(all_pages)
 
     for page_number, books_for_page in enumerate(all_pages, 1):
