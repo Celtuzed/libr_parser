@@ -18,7 +18,7 @@
           <ul class="pagination justify-content-center">
 
                 {% if this_page == 1 %}
-                  <li class="page-item"><a class="page-link" href="{{"index" + this_page|string + ".html"}}">Назад</a></li>
+                  <li class="page-item"><a class="page-link" disabled>Назад</a></li>
                 {% else %}
                   <li class="page-item"><a class="page-link" href="{{"index" + (this_page - 1)|string + ".html"}}">Назад</a></li>
                 {% endif %}
@@ -37,7 +37,7 @@
                 {% endfor %}
 
                 {% if this_page == pages_number %}
-                  <li class="page-item"><a class="page-link" href="{{"index" + this_page|string + ".html"}}">Вперёд</a></li>
+                  <li class="page-item"><a class="page-link" disabled>Вперёд</a></li>
                 {% else %}
                   <li class="page-item"><a class="page-link" href="{{"index" + (this_page + 1)|string + ".html"}}">Вперёд</a></li>
                 {% endif %}
