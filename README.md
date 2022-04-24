@@ -78,7 +78,3 @@ Python3 должен быть уже установлен.
 Репозиторий с электронной библиотекой: https://github.com/Celtuzed/Parsed-Library
 
 Саму электронную библиотеку можно посмотреть здесь: https://celtuzed.github.io/Parsed-Library/pages/index1.html
-
-### Цель проекта
-
-Код написан в образовательных целях на онлайн-курсе для веб-разработчиков [dvmn.org](https://dvmn.org/).
