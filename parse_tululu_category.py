@@ -26,14 +26,14 @@ def get_last_page():
     return end_page
 
 
-def get_books_urls(args):
+def get_books_urls(genre, args):
 
     url = "http://tululu.org/"
     books_urls = []
 
     for page in range(args.start_page, args.end_page):
 
-        category_url = f"http://tululu.org/l55/{page}"
+        category_url = f"http://tululu.org/{genre}/{page}"
 
         response = requests.get(category_url)
         response.raise_for_status()
@@ -102,45 +102,54 @@ if __name__ == '__main__':
     os.makedirs(images_folder, exist_ok=True)
     os.makedirs(json_folder, exist_ok=True)
 
-    books_urls = get_books_urls(args)
-    books_information = []
+    genres = [
+            "l55",  # Научная фантастика
+            "l77",  # Прочие детективы
+            "l101",  # Триллеры
+            "l8"  # Боевики
+            ]
 
-    for book_url in books_urls:
+    for genre in genres:
 
-        book_id = sanitize_filename(urlparse(book_url).path)[1:]
+        books_urls = get_books_urls(genre, args)
+        books_information = []
 
-        params = {
-            "id": book_id
-        }
-        url = "https://tululu.org/txt.php"
+        for book_url in books_urls:
 
-        try:
+            book_id = sanitize_filename(urlparse(book_url).path)[1:]
 
-            book_information = parse_book_page(book_id)
+            params = {
+                "id": book_id
+            }
+            url = "https://tululu.org/txt.php"
 
-            if not args.skip_txt:
-                book_path = download_txt(
-                    url, params, book_information['book_name'], books_folder, book_id)
-            else:
-                book_path = None
+            try:
 
-            if not args.skip_imgs:
-                img_path = download_image(
-                    book_information, book_information['book_name'], images_folder)
-            else:
-                img_path = None
+                book_information = parse_book_page(book_id)
 
-            books_information.append({
-                "title": book_information['book_name'],
-                "author": book_information['author_name'],
-                "img_scr": img_path.replace("\\", "/"),
-                "book_path": book_path.replace("\\", "/"),
-                "comments": book_information['comments'],
-                "genres": book_information['genres']
-            })
+                if not args.skip_txt:
+                    book_path = download_txt(
+                        url, params, book_information['book_name'], books_folder, book_id)
+                else:
+                    book_path = None
 
-        except requests.exceptions.HTTPError:
-            print(f"Не удалось скачать книгу с id = {book_id}")
+                if not args.skip_imgs:
+                    img_path = download_image(
+                        book_information, book_information['book_name'], images_folder)
+                else:
+                    img_path = None
 
-    with open(os.path.join(args.json_path, "books_information.json"), "w", encoding='utf8') as file:
-        json.dump(books_information, file, ensure_ascii=False)
+                books_information.append({
+                    "title": book_information['book_name'],
+                    "author": book_information['author_name'],
+                    "img_scr": img_path.replace("\\", "/"),
+                    "book_path": book_path.replace("\\", "/"),
+                    "comments": book_information['comments'],
+                    "genres": book_information['genres']
+                })
+
+            except requests.exceptions.HTTPError:
+                print(f"Не удалось скачать книгу с id = {book_id}")
+
+        with open(os.path.join(args.json_path, f"{genre}_books_information.json"), "w", encoding='utf8') as file:
+            json.dump(books_information, file, ensure_ascii=False)
