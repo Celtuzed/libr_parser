@@ -53,7 +53,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(
             description='Этот код нужен для парсинга онлайн библиотеки,\
-                         а также скачиванию книг и картинок.'
+                         а также для скачивания книг и картинок.'
     )
 
     parser.add_argument(
