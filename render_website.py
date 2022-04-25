@@ -12,12 +12,12 @@ LINES_ON_PAGE = 8
 
 def on_reload():
 
-    genres = [
-            "l55",  # Научная фантастика
-            "l77",  # Прочие детективы
-            "l101",  # Триллеры
-            "l8"  # Боевики
-            ]
+    genres = {
+            "l55" : "Научная фантастика",
+            "l77" : "Прочие детективы",
+            "l101" : "Триллеры",
+            "l8" : "Боевики"
+            }
 
     for genre in genres:
         env = Environment(
@@ -36,6 +36,7 @@ def on_reload():
         for page_number, books_for_page in enumerate(pages, 1):
 
             rendered_page = template.render(
+                genres=genres,
                 page_genre=genre,
                 books=books_for_page,
                 this_page=page_number,

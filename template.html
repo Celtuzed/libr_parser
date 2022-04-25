@@ -17,33 +17,15 @@
             <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                     <a class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                        <span class="fs-5 d-none d-sm-inline">Menu</span>
+                        <span class="fs-5 d-none d-sm-inline">Library</span>
                     </a>
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link align-middle px-0">Home</a>
-                        </li>
-
                         <li class="pb-3">
-                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="ms-1 d-none d-sm-inline">Жанры</span>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <ul class="dropdown_item">
-                                <li>
-                                    <a href="l55_index1.html" class="nav-link px-0">Научная фантастика</a>
-                                </li>
-                                <li>
-                                    <a href="l8_index1.html" class="nav-link px-0">Боевики</a>
-                                </li>
-                                <li>
-                                    <a href="l101_index1.html" class="nav-link px-0">Триллеры</a>
-                                </li>
-                                <li>
-                                    <a href="l77_index1.html" class="nav-link px-0">Прочие детективы</a>
-                                </li>
-                            </ul>
-                            </div>
+                          {% for genre in genres %}
+                            <li>
+                                <a href="{{genre}}_index1.html" class="nav-link px-0">{{genres[genre]}}</a>
+                            </li>
+                          {% endfor %}
                         </li>
                     </ul>
                 </div>
